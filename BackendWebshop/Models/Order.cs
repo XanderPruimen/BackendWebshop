@@ -6,7 +6,7 @@ namespace BackendWebshop.Models
     {
         public int OrderID { get; set; }
         public int UserID { get; set; }
-        public string Count { get; set; } = string.Empty;
+        public string Count { get; set; } 
         //public virtual ICollection<Item> Items { get; set; }
     }
 }

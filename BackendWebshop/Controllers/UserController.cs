@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using BackendWebshop.Context;
 using BackendWebshop.DTO_s;
 using BackendWebshop.Models;
+using System.Security.Principal;
 
 namespace BackendWebshop.Controllers
 {
@@ -59,38 +60,80 @@ namespace BackendWebshop.Controllers
             }
         }
 
-        [Route("/[controller]/register")]
-        [HttpPost]
-        public User register([FromBody] User u)
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(Register registerForm)
         {
-            if (u.Username == "" || u.Email == "" || u.Password == "")
+            if (string.IsNullOrWhiteSpace(registerForm.Email) || string.IsNullOrWhiteSpace(registerForm.Email) || string.IsNullOrWhiteSpace(registerForm.Email))
             {
-                return null;
+                return BadRequest("Missing_Data");
             }
             else
             {
-                var user = _dbContext.users.Where(x => x.Email.Equals(u.Email)).FirstOrDefault();
+                var user = _dbContext.users.Where(x => x.Email.Equals(registerForm.Email)).FirstOrDefault();
 
                 if (user == null)
                 {
                     try
                     {
-                        _dbContext.users.Add(user);
+                        UserDTO userDTO = new UserDTO()
+                        {
+                            Email = registerForm.Email,
+                            Username = registerForm.Username,
+                            Password = registerForm.Password,
+                        };
+
+                        _dbContext.users.Add(userDTO);
                         _dbContext.SaveChanges();
-                        return u;
-                        //redirect naar login page.
+                        return Ok("User_Saved");
                     }
                     catch
                     {
-                        return null;
+                        return BadRequest("Error_While_Saving_User");
                     }
                 }
                 else
                 {
-                    return null;
+                    return BadRequest("Email_Already_Used");
                 }
             }
 
+        }
+
+        [Route("/[controller]/CheckToken")]
+        [HttpPost]
+        public async Task<IActionResult> CheckToken(string token)
+        {
+            try
+            {
+                //Check Input
+                if (token == null)
+                {
+                    return BadRequest("Missing_Token");
+                }
+
+                //Check if token is expired
+                if (TC.isExpired(token) == true)
+                {
+                    return BadRequest("Token_Expired_Or_Not_Valid");
+                }
+
+                //Get Account from Token
+                User user = TC.TokenToAccount(token);
+                if (user.AccountID == 0)
+                {
+                    return BadRequest("No_Valid_AccountID");
+                }
+
+/*                //Refresh Token
+                string newToken = TC.GenerateToken(user);
+                Response.Headers.Add("AuthenticationToken", newToken);
+*/
+                return Ok(user);
+            }
+            catch
+            {
+                return BadRequest("Error_When_Getting_Account");
+            }
         }
 
 

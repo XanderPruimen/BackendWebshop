@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Text;
 using BackendWebshop.DTO_s;
+using System.Security.Principal;
+using BackendWebshop.Models;
 
 namespace BackendWebshop.Controllers
 {
@@ -108,6 +110,33 @@ namespace BackendWebshop.Controllers
                 data.Add(c);
             }
             return data;
+        }
+
+        public User TokenToAccount(string token)
+        {
+            try
+            {
+                List<Claim> data = new List<Claim>();
+
+                var handler = new JwtSecurityTokenHandler();
+                var jwtSecurityToken = handler.ReadJwtToken(token);
+
+                foreach (Claim c in jwtSecurityToken.Claims)
+                {
+                    data.Add(c);
+                }
+
+                User user = new User();
+                user.AccountID = Convert.ToInt32(data.FirstOrDefault(c => c.Type == "AccountID").Value);
+                user.Email = data.FirstOrDefault(c => c.Type == "Email").Value;
+                user.Username = data.FirstOrDefault(c => c.Type == "Username").Value;
+
+                return user;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

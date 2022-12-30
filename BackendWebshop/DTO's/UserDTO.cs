@@ -11,14 +11,13 @@ namespace BackendWebshop.DTO_s
             public int AccountID { get; set; }
 
             [Column(TypeName = "varchar(500)")]
-            public string Username { get; set; } = string.Empty;
+            public string Username { get; set; } 
 
             [Column(TypeName = "varchar(500)")]
-            public string Email { get; set; } = string.Empty;
+            public string Email { get; set; } 
 
             [Column(TypeName = "varchar(500)")]
-            public string Password { get; set; } = string.Empty;
-
+            public string Password { get; set; } 
         
     }
 }
