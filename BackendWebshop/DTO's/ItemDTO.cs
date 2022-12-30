@@ -13,13 +13,13 @@ namespace BackendWebshop.DTO_s
             public int ItemID { get; set; }
 
             [Column(TypeName = "varchar(500)")]
-            public string ItemName { get; set; } = string.Empty;
+            public string ItemName { get; set; }
 
             [Column(TypeName = "varchar(500)")]
-            public string ItemInfo { get; set; } = string.Empty;
+            public string ItemInfo { get; set; } 
 
             [Column(TypeName = "varchar(500)")]
-            public string ItemImage { get; set; } = string.Empty;
+            public string ItemImage { get; set; } 
 
             [Column(TypeName = "decimal(18, 0)")]
             public decimal ItemPrice { get; set; } 
