@@ -1,7 +1,31 @@
-FROM ubuntu
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+WORKDIR /app
 
-MAINTAINER xanderpruimen pal <461021@student.fontys.nl>
+ 
 
-RUN apt-get update
+EXPOSE 80
+EXPOSE 44334
 
-CMD ["echo", "Hello World...! from my first docker image!"]
+ 
+
+ 
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["BackendWebshop/BackendWebshop.csproj", "BackendWebshop/"]
+RUN dotnet restore "BackendWebshop/BackendWebshop.csproj"
+COPY . .
+WORKDIR "/src/BackendWebshop"
+RUN dotnet build "BackendWebshop.csproj" -c Release -o /app/build
+
+ 
+
+FROM build AS publish
+RUN dotnet publish "BackendWebshop.csproj" -c Release -o /app/publish
+
+ 
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "BackendWebshop.dll"]
