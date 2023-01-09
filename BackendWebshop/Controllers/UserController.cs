@@ -60,7 +60,7 @@ namespace BackendWebshop.Controllers
             }
         }
 
-        [HttpPost("Register")]
+        [HttpPost("/[controller]/register")]
         public async Task<IActionResult> Register(Register registerForm)
         {
             if (string.IsNullOrWhiteSpace(registerForm.Email) || string.IsNullOrWhiteSpace(registerForm.Email) || string.IsNullOrWhiteSpace(registerForm.Email))
@@ -118,7 +118,7 @@ namespace BackendWebshop.Controllers
                 }
 
                 //Get Account from Token
-                User user = TC.TokenToAccount(token);
+                User user = TC.TokenToUser(token);
                 if (user.AccountID == 0)
                 {
                     return BadRequest("No_Valid_AccountID");

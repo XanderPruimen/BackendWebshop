@@ -112,7 +112,7 @@ namespace BackendWebshop.Controllers
             return data;
         }
 
-        public User TokenToAccount(string token)
+        public User TokenToUser(string token)
         {
             try
             {
