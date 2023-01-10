@@ -20,14 +20,14 @@ namespace Authentication.Controllers
             this.db = db;
         }
 
-        [Route("/[controller]/login")]
+        [Route("/Account/login")]
         [HttpPost]
         public string login([FromHeader] string Authorization, [FromBody] User u)
         {
             string validToken = "";
 
             //check if exists
-            var user = db.Users.Where(x => x.Email.Equals(u.Email) && x.Password.Equals(u.Password)).FirstOrDefault();
+            var user = db.Users.Where(x => x.email.Equals(u.email) && x.password.Equals(u.password)).FirstOrDefault();
 
             string json = JsonConvert.SerializeObject(user);
 
@@ -52,16 +52,16 @@ namespace Authentication.Controllers
                 {
                     //als token niet valid is
                     //redirect naar login
-                    validToken = loginNoToken(user.Email, user.Role);
-                    uDTO.Email = u.Email;
-                    uDTO.Token = validToken;
+                    validToken = loginNoToken(user.email, user.role);
+                    uDTO.email = u.email;
+                    uDTO.token = validToken;
                     return JsonConvert.SerializeObject(uDTO);
                 }
                 else
                 {
                     //Als token wel valid is log meteen in
-                    uDTO.Email = u.Email;
-                    uDTO.Token = Authorization;
+                    uDTO.email = u.email;
+                    uDTO.token = Authorization;
                     return JsonConvert.SerializeObject(uDTO);
                 }
             }
@@ -73,17 +73,17 @@ namespace Authentication.Controllers
             return validToken;
         }
 
-        [Route("/[controller]/register")]
+        [Route("/Account/register")]
         [HttpPost]
         public User register([FromBody] User u)
         {
-            if (u.Email == "" || u.Username == "" || u.Password == "")
+            if (u.email == "" || u.username == "" || u.password == "")
             {
                 return null;
             }
             else
             {
-                var user = db.Users.Where(x => x.Email.Equals(u.Email)).FirstOrDefault();
+                var user = db.Users.Where(x => x.email.Equals(u.email)).FirstOrDefault();
 
                 if (user == null)
                 {
@@ -109,11 +109,11 @@ namespace Authentication.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("/[controller]/getUser")]
+        [Route("/Account/getUser")]
         public User getUser([FromHeader] string Authorization)
         {
             var x = TC.readOut(Authorization);
-            User user = db.Users.Where(x => x.Email.Equals(x.Email)).FirstOrDefault();
+            User user = db.Users.Where(x => x.email.Equals(x.email)).FirstOrDefault();
             return user;
         }
     }

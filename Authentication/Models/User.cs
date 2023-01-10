@@ -9,10 +9,10 @@ namespace Authentication.Models
     public class User
     {
         [Key]
-        public int UserID { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int Role { get; set; }
+        public int userID { get; set; }
+        public string username { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public int role { get; set; }
     }
 }

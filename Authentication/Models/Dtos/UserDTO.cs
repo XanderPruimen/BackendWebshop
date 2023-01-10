@@ -7,7 +7,7 @@ namespace Authentication.Models.Dtos
 {
     public class UserDTO
     {
-        public string Email { get; set; }
-        public string Token { get; set; }
+        public string email { get; set; }
+        public string token { get; set; }
     }
 }
