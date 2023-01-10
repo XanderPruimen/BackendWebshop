@@ -5,10 +5,12 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendWebshop", "BackendWebshop\BackendWebshop.csproj", "{2CA5A0DA-5C11-4CDF-8F4A-1ACCB19EE61B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{22DBCEF7-2B19-432C-892E-2984F21A8568}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{22DBCEF7-2B19-432C-892E-2984F21A8568}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2CA5A0DA-5C11-4CDF-8F4A-1ACCB19EE61B} = {2CA5A0DA-5C11-4CDF-8F4A-1ACCB19EE61B}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "Authentication\Authentication.csproj", "{306CB143-394A-4EE4-86CD-AB5E87D8A665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,10 @@ Global
 		{22DBCEF7-2B19-432C-892E-2984F21A8568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22DBCEF7-2B19-432C-892E-2984F21A8568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22DBCEF7-2B19-432C-892E-2984F21A8568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{306CB143-394A-4EE4-86CD-AB5E87D8A665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{306CB143-394A-4EE4-86CD-AB5E87D8A665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{306CB143-394A-4EE4-86CD-AB5E87D8A665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{306CB143-394A-4EE4-86CD-AB5E87D8A665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
