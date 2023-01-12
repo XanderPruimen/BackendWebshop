@@ -1,5 +1,6 @@
-﻿using BackendWebshop.Context;
-using BackendWebshop.DTO_s;
+﻿using Authentication.Data;
+using Authentication.Models;
+using Authentication.Data;
 
 namespace UnitTests
 {
@@ -9,17 +10,17 @@ namespace UnitTests
             //
             //FakeDatabase
             //
-            public static void InMemoryDatabaseWithData(ApplicationDBContext context)
+            public static void InMemoryDatabaseWithData(DataContext context)
             {
-                var users = new List<UserDTO>()
+                var users = new List<User>()
             {
-                new UserDTO { AccountID = 1, Username = "Johan", Email = "Johan@gmail.com", Password = "Kaarsje12"},
-                new UserDTO { AccountID = 2, Username = "Antoonus", Email = "Antonus@gmail.com", Password = "A4562!"},
-                new UserDTO { AccountID = 3, Username = "PJ", Email = "Pj@test.com", Password = "Testje12"},
+                new User { userID = 1, username = "Johan", email = "Johan@gmail.com", password = "Kaarsje12"},
+                new User { userID = 2, username = "Antoonus", email = "Antonus@gmail.com", password = "A4562!"},
+                new User { userID = 3, username = "PJ", email = "Pj@test.com", password = "Testje12"},
             };
-                if (!context.users.Any())
+                if (!context.Users.Any())
                 {
-                    context.users.AddRange(users);
+                    context.Users.AddRange(users);
                 };
                 context.SaveChanges();
             }

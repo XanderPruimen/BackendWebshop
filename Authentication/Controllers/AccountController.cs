@@ -22,7 +22,7 @@ namespace Authentication.Controllers
 
         [Route("/Account/login")]
         [HttpPost]
-        public string login([FromHeader] string Authorization, [FromBody] User u)
+        public IActionResult login([FromHeader] string Authorization, [FromBody] User u)
         {
             string validToken = "";
 
@@ -33,13 +33,13 @@ namespace Authentication.Controllers
 
             if (json == "[]")
             {
-                return "Niet gevonden";
+                return BadRequest("Niet gevonden");
             }
             else
             {
                 if (user == null)
                 {
-                    return null;
+                    return BadRequest("null");
                 }
                 UserDTO uDTO = new UserDTO();
                 //wel gevonden valideren
@@ -55,14 +55,14 @@ namespace Authentication.Controllers
                     validToken = loginNoToken(user.email, user.role);
                     uDTO.email = u.email;
                     uDTO.token = validToken;
-                    return JsonConvert.SerializeObject(uDTO);
+                    return Ok(JsonConvert.SerializeObject(uDTO));
                 }
                 else
                 {
                     //Als token wel valid is log meteen in
                     uDTO.email = u.email;
                     uDTO.token = Authorization;
-                    return JsonConvert.SerializeObject(uDTO);
+                    return Ok(JsonConvert.SerializeObject(uDTO));
                 }
             }
         }

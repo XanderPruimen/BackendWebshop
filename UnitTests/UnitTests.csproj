@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication\Authentication.csproj" />
-    <ProjectReference Include="..\BackendWebshop\BackendWebshop.csproj" />
+    <ProjectReference Include="..\VetsendBackend\VetsendBackend.csproj" />
   </ItemGroup>
 
 </Project>
