@@ -2,43 +2,43 @@ using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xunit;
-using BackendWebshop;
+using Authentication;
 using Microsoft.EntityFrameworkCore;
-using BackendWebshop.Context;
-using BackendWebshop.Controllers;
-using BackendWebshop.Models;
+using Authentication.Controllers;
+using Authentication.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication;
+using Authentication.Data;
 
 namespace UnitTests
     {
         public class AccountTests
         {
-            private readonly ApplicationDBContext _dbContext;
+            private readonly DataContext _dbContext;
             public AccountTests([CallerMemberName] string callerName = "")
             {
-                var options = new DbContextOptionsBuilder<ApplicationDBContext>().UseInMemoryDatabase(databaseName: "InMemoryProductDb_" + callerName).Options;
-                var context = new ApplicationDBContext(options);
+                var options = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase(databaseName: "InMemoryProductDb_" + callerName).Options;
+                var context = new DataContext(options);
                 InMemoryDatabasesWithData.InMemoryDatabaseWithData(context);
                 _dbContext = context;
             }
 
- /*           [Fact]
+            [Fact]
             private async Task Login_ShouldValidateAccount()
             {
                 //Initialize Controller
-                var controller = new UserController(_dbContext);
+                var controller = new AccountController(_dbContext);
                 var tc = new TokenController();
 
                 //New Data
                 var loginUser = new User()
                 {
-                    Email = "Johan@gmail.com",
-                    Password = "Kaarsje12",
+                    email = "Johan@gmail.com",
+                    password = "Kaarsje12",
                 };
 
             //Run and get result
-            var result = await controller.Login(loginUser);
+                var result = await controller.login(loginUser);
                 var actionResult = result as OkObjectResult;
                 ResponseValue test = actionResult.Value as ResponseValue;
                 var user = tc.TokenToUser(actionResult.Value.ToString());
@@ -53,18 +53,18 @@ namespace UnitTests
             private async Task Login_ShouldReturnErrorAccount_Not_Found()
             {
                 //Initialize Controller
-                var controller = new UserController(_dbContext);
+                var controller = new AccountController(_dbContext);
                 var tc = new TokenController();
 
                 //New Data
                 var loginUser = new User()
                 {
-                    Email = "test",
-                    Password = "test",
+                    email = "test",
+                    password = "test",
                 };
 
                 //Run and get result
-                var result = await controller.Login(loginUser);
+                var result = await controller.login(loginUser);
                 var actionResult = result as BadRequestObjectResult;
 
                 //Check
@@ -77,18 +77,18 @@ namespace UnitTests
             private async Task Login_ShouldReturnErrorMissingEmail()
             {
                 //Initialize Controller
-                var controller = new UserController(_dbContext);
+                var controller = new AccountController(_dbContext);
                 var tc = new TokenController();
 
                 //New Data
                 var loginUser = new User()
                 {
-                    Email = "",
-                    Password = "test",
+                    email = "",
+                    password = "test",
                 };
 
                 //Run and get result
-                var result = await controller.Login(loginUser);
+                var result = await controller.login(loginUser);
                 var actionResult = result as BadRequestObjectResult;
 
                 //Check
@@ -101,24 +101,24 @@ namespace UnitTests
             private async Task Login_ShouldReturnErrorMissingPassword()
             {
                 //Initialize Controller
-                var controller = new UserController(_dbContext);
+                var controller = new AccountController(_dbContext);
                 var tc = new TokenController();
 
                 //New Data
                 var loginUser = new User()
                 {
-                    Email = "test",
-                    Password = "",
+                    email = "test",
+                    password = "",
                 };
 
                 //Run and get result
-                var result = await controller.Login(loginUser);
+                var result = await controller.login(loginUser);
                 var actionResult = result as BadRequestObjectResult;
 
                 //Check
                 Assert.IsType<BadRequestObjectResult>(result);
                 Assert.Equal(400, actionResult.StatusCode);
                 Assert.Equal("Missing_Password", actionResult.Value.ToString());
-            }*/
+            }
         }
     }

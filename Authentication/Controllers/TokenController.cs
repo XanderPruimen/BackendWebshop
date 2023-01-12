@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Authentication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
@@ -95,6 +96,33 @@ namespace Authentication.Controllers
         {
             var x = GenerateToken(Email, Role);
             return x.ToString();
+        }
+
+        public User TokenToUser(string token)
+        {
+            try
+            {
+                List<Claim> data = new List<Claim>();
+
+                var handler = new JwtSecurityTokenHandler();
+                var jwtSecurityToken = handler.ReadJwtToken(token);
+
+                foreach (Claim c in jwtSecurityToken.Claims)
+                {
+                    data.Add(c);
+                }
+
+                User user = new User();
+                user.userID = Convert.ToInt32(data.FirstOrDefault(c => c.Type == "AccountID").Value);
+                user.email = data.FirstOrDefault(c => c.Type == "Email").Value;
+                user.username = data.FirstOrDefault(c => c.Type == "Username").Value;
+
+                return user;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
